@@ -1,0 +1,93 @@
+package com.example.final_assignment.Helper
+
+import android.content.Context
+import android.widget.Toast
+import com.example.final_assignment.Model.ItemsModel
+import com.example.final_assignment.Helper.ChangeNumberItemsListener
+
+
+class ManagmentCart(val context: Context) {
+
+    private val tinyDB = TinyDB(context)
+
+    fun insertFood(item: ItemsModel) {
+        var listFood = getListCart()
+        val existAlready = listFood.any { it.title == item.title }
+        val index = listFood.indexOfFirst { it.title == item.title }
+
+        if (existAlready) {
+            listFood[index].numberInCart = item.numberInCart
+        } else {
+            listFood.add(item)
+        }
+        tinyDB.putListObject("CartList", listFood)
+        Toast.makeText(context, "Added to your Cart", Toast.LENGTH_SHORT).show()
+    }
+
+    fun getListCart(): ArrayList<ItemsModel> {
+        return tinyDB.getListObject("CartList") ?: arrayListOf()
+    }
+
+    fun minusItem(listFood: ArrayList<ItemsModel>, position: Int, listener: ChangeNumberItemsListener) {
+        if (listFood[position].numberInCart == 1) {
+            listFood.removeAt(position)
+        } else {
+            listFood[position].numberInCart--
+        }
+        tinyDB.putListObject("CartList", listFood)
+        listener.onChanged()
+    }
+
+    fun plusItem(listFood: ArrayList<ItemsModel>, position: Int, listener: ChangeNumberItemsListener) {
+        listFood[position].numberInCart++
+        tinyDB.putListObject("CartList", listFood)
+        listener.onChanged()
+    }
+
+    fun getTotalFee(): Double {
+        val listFood = getListCart()
+        var fee = 0.0
+        for (item in listFood) {
+            fee += item.price * item.numberInCart
+        }
+        return fee
+    }
+
+
+    fun clearCart() {
+            tinyDB.putListObject("CartList", arrayListOf<ItemsModel>())
+            Toast.makeText(context, "Cart cleared", Toast.LENGTH_SHORT).show()
+        }
+
+
+    // ManagmentCart.kt - Add these methods
+    fun removeFromFavorites(item: ItemsModel) {
+        // Filter the list and convert it to an ArrayList
+        val listFood = ArrayList(getListCart().filterNot { it.title == item.title })
+
+        // Save the updated list to TinyDB
+        tinyDB.putListObject("CartList", listFood)
+
+        // Show a toast message indicating the item was removed
+        Toast.makeText(context, "Removed from your Cart", Toast.LENGTH_SHORT).show()
+    }
+
+
+    fun addToFavorites(item: ItemsModel) {
+        var listFood = getListCart()
+        val existAlready = listFood.any { it.title == item.title }
+
+        if (!existAlready) {
+            listFood.add(item)
+        }
+        tinyDB.putListObject("CartList", listFood)
+        Toast.makeText(context, "Added to your Favorites", Toast.LENGTH_SHORT).show()
+    }
+
+    fun getFavorites(): List<ItemsModel> {
+        // Use the key "FavoriteList" to retrieve the list of favorites
+        return tinyDB.getListObject("FavoriteList") ?: arrayListOf()
+    }
+
+
+}

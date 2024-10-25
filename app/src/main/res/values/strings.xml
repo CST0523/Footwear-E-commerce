@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Final_Assignment</string>
+    <string name="intro_title">Step into your style\n<font color="#090c9b">A world of shoes</font></string>
+    <string name="intro_text">Browse the latest styles from top brands\nGet personalized recommendations\nEnjoy fast, free shipping</string>
+    <string name="intro_signin">Already have an account? <font color="#090c9b">Sign In</font></string>
+</resources>
