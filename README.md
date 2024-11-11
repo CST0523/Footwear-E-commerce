@@ -31,5 +31,5 @@ This app is perfect for sneaker aficionados, fashion-forward shoppers, and occas
 
 <div style="display: flex; justify-content: space-around;">
     <img src="https://github.com/user-attachments/assets/35b8b2ea-6684-4135-8e35-6f76e01b7d93" alt="Wishlist Page" width="45%" />
-    <img src= alt="https://github.com/user-attachments/assets/616bfabe-4a1d-4abe-a282-c46a334b3e0c" alt="Check Out Page" width="45%" />
+    <img src="https://github.com/user-attachments/assets/616bfabe-4a1d-4abe-a282-c46a334b3e0c" alt="Check Out Page" width="45%" />
 </div>
